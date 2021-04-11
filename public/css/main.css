@@ -269,6 +269,10 @@ button span {
     margin-left: var(--spacing);
     position: absolute;
     bottom: -66px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .profileHeaderContainer .userImageContainer img {
@@ -369,4 +373,23 @@ button span {
 .user .userDetailsContainer {
     flex: 1;
     padding: 0 var(--spacing);
+}
+
+.profilePictureButton {
+    position: absolute;
+    font-size: 50px;
+    color: rgba(0,0,0,0.5);
+    display: none;
+}
+
+.userImageContainer:hover .profilePictureButton {
+    display: block;
+}
+
+#imagePreview {
+    width: 100%;
+    display: block;
+
+    /* This rule is very important, please don't ignore this */
+    max-width: 100%;
 }
