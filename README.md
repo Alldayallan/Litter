@@ -2,14 +2,13 @@
 
 ## Node.js - Socket.iO - MondgoDB
 
-## Install the dependencies
+### Install the dependencies
 ```
 bash, Z shell or the like
-run
 npm install
 ```
 
-## Run the server
+### Run the server
 ```
 npm start
 ```
