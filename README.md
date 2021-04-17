@@ -1,6 +1,6 @@
 # Litter
 
-## Node.js - Socket.iO - MondgoDB
+## Node.js - Socket.iO and MondgoDB
 
 ### Install the dependencies
 ```
