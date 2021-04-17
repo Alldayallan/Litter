@@ -1,7 +1,7 @@
 $(document).ready(() => {
 
     if(selectedTab === "followers") {
-        loadFollowers()
+        loadFollowers();
     }
     else {
         loadFollowing();

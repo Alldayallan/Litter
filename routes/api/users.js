@@ -64,7 +64,7 @@ router.get("/:userId/followers", async (req, res, next) => {
 router.post("/profilePicture", upload.single("croppedImage"), async (req, res, next) => {
     if(!req.file) {
         console.log("No file uploaded with ajax request.");
-        return req.sendStatus(400);
+        return res.sendStatus(400);
     }
 
     var filePath = `/uploads/images/${req.file.filename}.png`;
@@ -77,7 +77,7 @@ router.post("/profilePicture", upload.single("croppedImage"), async (req, res, n
             return res.sendStatus(400);
         }
 
-        req.session.user = await User.findByIdAndUpdate(req.session.user._id, { profilePic: filePath }, { new: true } )
+        req.session.user = await User.findByIdAndUpdate(req.session.user._id, { profilePic: filePath }, { new: true });
         res.sendStatus(204);
     })
     
@@ -86,7 +86,7 @@ router.post("/profilePicture", upload.single("croppedImage"), async (req, res, n
 router.post("/coverPhoto", upload.single("croppedImage"), async (req, res, next) => {
     if(!req.file) {
         console.log("No file uploaded with ajax request.");
-        return req.sendStatus(400);
+        return res.sendStatus(400);
     }
 
     var filePath = `/uploads/images/${req.file.filename}.png`;
@@ -99,7 +99,7 @@ router.post("/coverPhoto", upload.single("croppedImage"), async (req, res, next)
             return res.sendStatus(400);
         }
 
-        req.session.user = await User.findByIdAndUpdate(req.session.user._id, { coverPhoto: filePath }, { new: true } )
+        req.session.user = await User.findByIdAndUpdate(req.session.user._id, { coverPhoto: filePath }, { new: true });
         res.sendStatus(204);
     })
     
