@@ -233,8 +233,16 @@ $("#userSearchTextbox").keydown((event) => {
     var textbox = $(event.target);
     var value = textbox.val();
 
-    if (value == "" && event.keycode == 8) {
+    if (value == "" && (event.which == 8 || event.keyCode == 8)) {
         // remove user from selection
+        selectedUsers.pop();
+        updateSelectedUsersHtml();
+        $(".resultsContainer").html("");
+
+        if(selectedUsers.length == 0) {
+            $("#createChatButton").prop("disabled", true);
+        }
+
         return;
     }
 
@@ -249,6 +257,17 @@ $("#userSearchTextbox").keydown((event) => {
         }
     }, 1000)
 
+})
+
+$("#createChatButton").click(() => {
+    var data = JSON.stringify(selectedUsers);
+
+    $.post("/api/chats", { users: data }, chat => {
+
+        if(!chat || !chat._id) return alert("Invalid response from server");
+
+        window.location.href = `/messages/${chat._id}`;
+    })
 })
 
 $(document).on("click", ".likeButton", (event) => {
@@ -583,11 +602,11 @@ function outputSelectableUsers(results, container) {
 
     results.forEach(result => {
 
-        if(result._id == userLoggedIn._id) {
+        if(result._id == userLoggedIn._id || selectedUsers.some(u => u._id == result._id)) {
             return;
         }
 
-        var html = createUserHtml(result, true);
+        var html = createUserHtml(result, false);
         var element = $(html);
         element.click(() => userSelected(result))
 
@@ -601,7 +620,21 @@ function outputSelectableUsers(results, container) {
 
 function userSelected(user) {
     selectedUsers.push(user);
+    updateSelectedUsersHtml()
     $("#userSearchTextbox").val("").focus();
     $(".resultsContainer").html("");
     $("#createChatButton").prop("disabled", false);
+}
+
+function updateSelectedUsersHtml() {
+    var elements = [];
+
+    selectedUsers.forEach(user => {
+        var name = user.firstName + " " + user.lastName;
+        var userElement = $(`<span class='selectedUser'>${name}</span>`);
+        elements.push(userElement);
+    })
+
+    $(".selectedUser").remove();
+    $("#selectedUsers").prepend(elements);
 }
