@@ -3,6 +3,11 @@ var cropper;
 var timer;
 var selectedUsers = [];
 
+$(document).ready(() => {
+    refreshMessagesBadge();
+    refreshNotificationsBadge();
+})
+
 $("#postTextarea, #replyTextarea").keyup(event => {
     var textbox = $(event.target);
     var value = textbox.val().trim();
@@ -675,6 +680,8 @@ function messageReceived(newMessage) {
     else {
         addChatMessageHtml(newMessage);
     }
+
+    refreshMessagesBadge()
 }
 
 function markNotificationsAsOpened(notificationId = null, callback = null) {
@@ -685,5 +692,35 @@ function markNotificationsAsOpened(notificationId = null, callback = null) {
         url: url,
         type: "PUT",
         success: () => callback()
+    })
+}
+
+function refreshMessagesBadge() {
+    $.get("/api/chats", { unreadOnly: true }, (data) => {
+        
+        var numResults = data.length;
+
+        if(numResults > 0) {
+            $("#messagesBadge").text(numResults).addClass("active");
+        }
+        else {
+            $("#messagesBadge").text("").removeClass("active");
+        }
+
+    })
+}
+
+function refreshNotificationsBadge() {
+    $.get("/api/notifications", { unreadOnly: true }, (data) => {
+        
+        var numResults = data.length;
+
+        if(numResults > 0) {
+            $("#notificationBadge").text(numResults).addClass("active");
+        }
+        else {
+            $("#notificationBadge").text("").removeClass("active");
+        }
+
     })
 }
