@@ -70,7 +70,7 @@ app.get("/", middleware.requireLogin, (req, res, next) => {
     res.status(200).render("home", payload);
 })
 
-io.on("connection", (socket) => {
+io.on("connection", socket => {
     
     socket.on("setup", userData => {
         socket.join(userData._id);
