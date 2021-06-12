@@ -1,7 +1,7 @@
 var connected = false;
 
 //var socket = io("http://localhost:3003")
-var socketUrl = "http://litter.media"; // ADD YOUR HOSTED URL HERE
+var socketUrl = "https://litter-media.herokuapp.com/"; // ADD YOUR HOSTED URL HERE
  
 if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
     // If in localhost, use this url
